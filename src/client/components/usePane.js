@@ -33,7 +33,7 @@ export function usePane(id, paneRef, headRef, resizable = false) {
     if (!config) {
       const count = ++info.count
       config = {
-        y: count * 20,
+        y: 80 + (count * 20),
         x: count * 20,
         width: paneRef.current.offsetWidth,
         height: paneRef.current.offsetHeight,
@@ -55,7 +55,7 @@ export function usePane(id, paneRef, headRef, resizable = false) {
     const maxX = window.innerWidth - config.width
     const maxY = window.innerHeight - config.height
     config.x = Math.min(Math.max(0, config.x), maxX)
-    config.y = Math.min(Math.max(0, config.y), maxY)
+    config.y = Math.min(Math.max(80, config.y), maxY)
 
     pane.style.top = `${config.y}px`
     pane.style.left = `${config.x}px`
@@ -81,6 +81,7 @@ export function usePane(id, paneRef, headRef, resizable = false) {
       if (!moving) return
       config.x += e.movementX
       config.y += e.movementY
+      config.y = Math.max(80, config.y)
       pane.style.top = `${config.y}px`
       pane.style.left = `${config.x}px`
       persist()
